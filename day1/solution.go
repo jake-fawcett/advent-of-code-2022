@@ -2,35 +2,13 @@ package main
 
 import (
 	"strconv"
-	"bufio"
 	"fmt"
-	"os"
+	"common"
 )
 
 const file_name string = "input.txt"
 
-func read_file() ([]string) {
-	file, err := os.Open(file_name)
-	if err != nil {
-		fmt.Printf("Could not read the file due to this %s error \n", err)
-	}
-
-	fileScanner := bufio.NewScanner(file)
-    fileScanner.Split(bufio.ScanLines)
-	var fileLines []string
-
-	for fileScanner.Scan() {
-        fileLines = append(fileLines, fileScanner.Text())
-    }
-  
-    file.Close()
-
-	return fileLines
-}
-
-func main() {
-	fileLines := read_file()
-
+func partOneAndTwo(fileLines []string) (int, int) {
 	var current, max1, max2, max3 int = 0, 0, 0, 0
 	for _, line := range fileLines {
 		if line == "" {
@@ -47,6 +25,12 @@ func main() {
 			current += lineInt
 		}
     }
+	return  max1 ,(max1 + max2 + max3)
+}
 
-	fmt.Println(max1 + max2 + max3)
+func main() {
+	fileLines := common.ReadTextFile(file_name)
+	var partOneResult, partTwoResult int = partOneAndTwo(fileLines)
+	fmt.Println("Part one:", partOneResult)
+	fmt.Println("Part two:", partTwoResult)
 }

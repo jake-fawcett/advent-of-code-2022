@@ -1,35 +1,13 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"os"
+	"common"
 )
 
 const file_name string = "input.txt"
 
-func read_file() ([]string) {
-	file, err := os.Open(file_name)
-	if err != nil {
-		fmt.Printf("Could not read the file due to this %s error \n", err)
-	}
-
-	fileScanner := bufio.NewScanner(file)
-    fileScanner.Split(bufio.ScanLines)
-	var fileLines []string
-
-	for fileScanner.Scan() {
-        fileLines = append(fileLines, fileScanner.Text())
-    }
-  
-    file.Close()
-
-	return fileLines
-}
-
-func main() {
-	fileLines := read_file()
-
+func partOne(fileLines []string) (int) {
 	var score int = 0
 	for _, line := range fileLines {
 		var opponent = line[0:1]
@@ -66,39 +44,46 @@ func main() {
 			}
 		}
     }
-
-	fmt.Println(score)
+	return score
 }
 
-// Part One
-// for _, line := range fileLines {
-// 	var player1 = line[0:1]
-// 	var player2 = line[2:3]
-	
-// 	switch {
-// 		case player2 == "X":
-// 		score += 1
-// 		if player1 == "C" {
-// 			score += 6
-// 		} else if player1 == "A" {
-// 			score += 3
-// 		}
+func partTwo(fileLines []string) (int) {
+	var score int = 0
+	for _, line := range fileLines {
+		var player1 = line[0:1]
+		var player2 = line[2:3]
+		
+		switch {
+			case player2 == "X":
+			score += 1
+			if player1 == "C" {
+				score += 6
+			} else if player1 == "A" {
+				score += 3
+			}
 
-// 		case player2 == "Y":
-// 		score += 2
-// 		if player1 == "A" {
-// 			score += 6
-// 		} else if player1 == "B" {
-// 			score += 3
-// 		}
+			case player2 == "Y":
+			score += 2
+			if player1 == "A" {
+				score += 6
+			} else if player1 == "B" {
+				score += 3
+			}
 
-// 		case player2 == "Z":
-// 		score += 3
-// 		if player1 == "B" {
-// 			score += 6
-// 		} else if player1 == "C" {
-// 			score += 3
-// 		}
+			case player2 == "Z":
+			score += 3
+			if player1 == "B" {
+				score += 6
+			} else if player1 == "C" {
+				score += 3
+			}
+		}
+	}
+	return score
+}
 
-// 	}
-// }
+func main() {
+	fileLines := common.ReadTextFile(file_name)
+	fmt.Println("Part one:", partOne(fileLines))
+	fmt.Println("Part two:", partTwo(fileLines))
+}
