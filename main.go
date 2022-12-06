@@ -3,7 +3,7 @@ package main
 import (
     "fmt"
     "net/http"
-	"common/day1"
+	"advent-of-code-2022/day1"
 )
 
 func main() {

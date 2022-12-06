@@ -3,10 +3,10 @@ package day1
 import (
 	"strconv"
 	"fmt"
-	"common"
+	"advent-of-code-2022/common"
 )
 
-const file_name string = "../day1/input.txt"
+const file_name string = "day1/input.txt"
 
 func partOneAndTwo(fileLines []string) (int, int) {
 	var current, max1, max2, max3 int = 0, 0, 0, 0
