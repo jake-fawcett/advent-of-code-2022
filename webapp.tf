@@ -17,10 +17,9 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 3.0.0"
+      version = "~> 3.34.0"
     }
   }
-  required_version = ">= 0.14.9"
 }
 provider "azurerm" {
   features {}
@@ -53,16 +52,14 @@ resource "azurerm_linux_web_app" "webapp" {
   resource_group_name   = azurerm_resource_group.rg.name
   service_plan_id       = azurerm_service_plan.appserviceplan.id
   https_only            = true
+  
   site_config { 
     minimum_tls_version = "1.2"
   }
 }
 
-#  Deploy code from a public GitHub repo
-resource "azurerm_app_service_source_control" "sourcecontrol" {
-  app_id             = azurerm_linux_web_app.webapp.id
-  repo_url           = "https://github.com/Jake-Fawcett/advent-of-code-2022"
-  branch             = "main"
-  use_manual_integration = true
-  use_mercurial      = false
+resource "null_resource" "deployWebapp" {
+  provisioner "local-exec" {
+    command = "az webapp up --resource-group ${azurerm_resource_group.rg.name} --name ${azurerm_linux_web_app.webapp.name} --os-type linux --runtime GO:1.18"
+  }
 }
