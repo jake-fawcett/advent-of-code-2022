@@ -1,4 +1,4 @@
-package main
+package day1
 
 import (
 	"strconv"
@@ -6,7 +6,7 @@ import (
 	"common"
 )
 
-const file_name string = "input.txt"
+const file_name string = "../day1/input.txt"
 
 func partOneAndTwo(fileLines []string) (int, int) {
 	var current, max1, max2, max3 int = 0, 0, 0, 0
@@ -28,9 +28,8 @@ func partOneAndTwo(fileLines []string) (int, int) {
 	return  max1 ,(max1 + max2 + max3)
 }
 
-func main() {
+func Calculate() (string) {
 	fileLines := common.ReadTextFile(file_name)
 	var partOneResult, partTwoResult int = partOneAndTwo(fileLines)
-	fmt.Println("Part one:", partOneResult)
-	fmt.Println("Part two:", partTwoResult)
+	return fmt.Sprintf("Part one: %v \nPart two: %v", partOneResult, partTwoResult)
 }
