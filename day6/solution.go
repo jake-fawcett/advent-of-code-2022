@@ -37,6 +37,7 @@ func partTwo(fileLines []string) (int) {
 	return 0
 }
 
+// TODO: Use Sets!
 func main() {
 	fileLines := common.ReadTextFile(file_name)
 	fmt.Println("Part one:", partOne(fileLines))
