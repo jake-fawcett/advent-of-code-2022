@@ -4,16 +4,37 @@ import (
     "fmt"
     "net/http"
 	"advent-of-code-2022/day1"
+    "advent-of-code-2022/day2"
+    "advent-of-code-2022/day3"
+    "advent-of-code-2022/day4"
+    "advent-of-code-2022/day5"
+    "advent-of-code-2022/day6"
 )
 
 func main() {
     http.HandleFunc("/hello", HelloServer)
-	http.HandleFunc("/day1", Day1Server)
+
+    m := map[string]func()(string) {
+		"day1": day1.Calculate,
+		"day2": day2.Calculate,
+		"day3": day3.Calculate,
+		"day4": day4.Calculate,
+		"day5": day5.Calculate,
+		"day6": day6.Calculate,
+	}
+
+	for day, function := range m {
+        path := fmt.Sprintf("/%s", day)
+        http.HandleFunc(path, DayServer(function))
+	}
+
     http.ListenAndServe(":8080", nil)
 }
 
-func Day1Server(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, day1.Calculate())
+func DayServer(f func()(string)) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        fmt.Fprintf(w, f())
+    }
 }
 
 func HelloServer(w http.ResponseWriter, r *http.Request) {

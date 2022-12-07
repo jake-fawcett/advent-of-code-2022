@@ -2,12 +2,12 @@ package day5
 
 import (
 	"fmt"
-	"common"
+	"advent-of-code-2022/common"
 	"regexp"
 	"strconv"
 )
 
-const file_name string = "input.txt"
+const file_name string = "day5/input.txt"
 
 type stack []string
 
@@ -94,8 +94,9 @@ func partTwo(fileLines []string) (string) {
 	return getTopCrates(stackList)
 }
 
-func main() {
+func Calculate() (string) {
 	fileLines := common.ReadTextFile(file_name)
-	fmt.Println("Part one:", partOne(fileLines))
-	fmt.Println("Part two:", partTwo(fileLines))
+	var partOneResult = partOne(fileLines)
+	var partTwoResult = partTwo(fileLines)
+	return fmt.Sprintf("Part one: %v \nPart two: %v", partOneResult, partTwoResult)
 }

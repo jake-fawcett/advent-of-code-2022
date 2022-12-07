@@ -3,10 +3,10 @@ package day3
 import (
 	"strings"
 	"fmt"
-	"common"
+	"advent-of-code-2022/common"
 )
 
-const file_name string = "input.txt"
+const file_name string = "day3/input.txt"
 
 func partOne(fileLines []string) (int) {
 	var prioritySum int = 0
@@ -46,8 +46,9 @@ func partTwo(fileLines []string) (int) {
 	return prioritySum
 }
 
-func main() {
+func Calculate() (string) {
 	fileLines := common.ReadTextFile(file_name)
-	fmt.Println("Part one:", partOne(fileLines))
-	fmt.Println("Part two:", partTwo(fileLines))
+	var partOneResult = partOne(fileLines)
+	var partTwoResult = partTwo(fileLines)
+	return fmt.Sprintf("Part one: %v \nPart two: %v", partOneResult, partTwoResult)
 }

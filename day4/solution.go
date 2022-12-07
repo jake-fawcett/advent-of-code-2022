@@ -2,12 +2,12 @@ package day4
 
 import (
 	"fmt"
-	"common"
+	"advent-of-code-2022/common"
 	"strings"
 	"strconv"
 )
 
-const file_name string = "input.txt"
+const file_name string = "day4/input.txt"
 
 func extractRanges(line string) (int, int, int, int) {
 	var rangeOne = strings.Split(strings.Split(line, ",")[0], "-")
@@ -41,8 +41,9 @@ func partTwo(fileLines []string) (int) {
 	return containedRanges
 }
 
-func main() {
+func Calculate() (string) {
 	fileLines := common.ReadTextFile(file_name)
-	fmt.Println("Part one:", partOne(fileLines))
-	fmt.Println("Part two:", partTwo(fileLines))
+	var partOneResult = partOne(fileLines)
+	var partTwoResult = partTwo(fileLines)
+	return fmt.Sprintf("Part one: %v \nPart two: %v", partOneResult, partTwoResult)
 }
