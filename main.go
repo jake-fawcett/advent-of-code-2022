@@ -9,6 +9,7 @@ import (
     "advent-of-code-2022/day4"
     "advent-of-code-2022/day5"
     "advent-of-code-2022/day6"
+    "advent-of-code-2022/day7"
 )
 
 func main() {
@@ -21,6 +22,7 @@ func main() {
 		"day4": day4.Calculate,
 		"day5": day5.Calculate,
 		"day6": day6.Calculate,
+        "day7": day7.Calculate,
 	}
 
 	for day, function := range m {
