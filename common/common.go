@@ -6,7 +6,12 @@ import (
 	"os"
 )
 
-func ReadTextFile(file_name string) ([]string) {
+type ContentTypes struct{
+    strings string
+    const2 int
+}
+
+func ReadTextFile(file_name string, contents string) ([]string) {
 	file, err := os.Open(file_name)
 	if err != nil {
 		fmt.Printf("Could not read the file due to this %s error \n", err)
@@ -14,8 +19,9 @@ func ReadTextFile(file_name string) ([]string) {
 
 	fileScanner := bufio.NewScanner(file)
     fileScanner.Split(bufio.ScanLines)
-	var fileLines []string
 
+	if contents == "string"
+	var fileLines []string
 	for fileScanner.Scan() {
         fileLines = append(fileLines, fileScanner.Text())
     }
