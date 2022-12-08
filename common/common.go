@@ -28,7 +28,7 @@ func ReadTextFileOfString(file_name string) ([]string) {
 	return fileLines
 }
 
-func ReadTextFileOfInt(file_name string) ([]int) {
+func ReadTextFileOfInt(file_name string) ([][]int) {
 	file, err := os.Open(file_name)
 	if err != nil {
 		fmt.Printf("Could not read the file due to this %s error \n", err)
@@ -36,18 +36,17 @@ func ReadTextFileOfInt(file_name string) ([]int) {
 	fileScanner := bufio.NewScanner(file)
     fileScanner.Split(bufio.ScanLines)
 
-	var fileLines []int
+	var fileLines [][]int
 	for fileScanner.Scan() {
 		var intRow []int
 		for _, i := range fileScanner.Text() {
 			var intI, _ = strconv.Atoi(string(i))
 			intRow = append(intRow, intI)
 		}
-		fileScannerInt, err := strconv.Atoi(fileScanner.Text())
         if err != nil {
             fmt.Printf("Could not convert fileScanner.Text() to int due to this %s error \n", err)
         }
-        fileLines = append(fileLines, fileScannerInt)
+        fileLines = append(fileLines, intRow)
     }
     file.Close()
 	return fileLines
