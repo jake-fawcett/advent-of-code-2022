@@ -83,7 +83,7 @@ func partTwo(fileLines []string) (int) {
 }
 
 func Calculate() (string) {
-	fileLines := common.ReadTextFile(file_name)
+	fileLines := common.ReadTextFileOfString(file_name)
 	var partOneResult = partOne(fileLines)
 	var partTwoResult = partTwo(fileLines)
 	return fmt.Sprintf("Part one: %v \nPart two: %v", partOneResult, partTwoResult)

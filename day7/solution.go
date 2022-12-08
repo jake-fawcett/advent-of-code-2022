@@ -71,7 +71,7 @@ func partTwo(dirs map[string]int) (int) {
 }
 
 func Calculate() (string) {
-	fileLines := common.ReadTextFile(file_name)
+	fileLines := common.ReadTextFileOfString(file_name)
 	var dirs, partOneResult = partOne(fileLines)
 	var partTwoResult = partTwo(dirs)
 	return fmt.Sprintf("Part one: %v \nPart two: %v", partOneResult, partTwoResult)
