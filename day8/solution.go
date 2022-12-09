@@ -2,7 +2,6 @@ package day8
 
 import (
 	"fmt"
-	"testing"
 	"advent-of-code-2022/common"
 )
 
@@ -80,22 +79,7 @@ func partTwo(fileLines [][]int) (int) {
 }
 
 func Calculate() (string) {
-	fileLines := common.ReadTextFileOfInt("input.txt")
+	fileLines := common.ReadTextFileOfInt("day8/input.txt")
 	var partOneResult, partTwoResult = partOne(fileLines), partTwo(fileLines)
 	return fmt.Sprintf("Part one: %v \nPart two: %v", partOneResult, partTwoResult)
-}
-
-func TestPartOne(t *testing.T) {
-	fileLines := common.ReadTextFileOfInt("testInput.txt")
-	var partOneResult, partTwoResult = partOne(fileLines), partTwo(fileLines)
-	if partOneResult != 21 {
-		t.Log("error partOneResult should be 21")
-		t.Fail()
-	}
-
-	if partTwoResult != 12 {
-		t.Log("error partTwoResult should be 21")
-		t.Fail()
-	}
-
 }
