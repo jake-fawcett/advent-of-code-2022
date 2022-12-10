@@ -18,15 +18,8 @@ type Coord struct {
 	xPos, yPos int
 }
 
-func diff(a, b int) int {
-	if a < b {
-	   return b - a
-	}
-	return a - b
- }
-
 func moveTail(prevKnot, knot Coord, knotNum, part int, visited [grid_size][grid_size]int) (Coord, [grid_size][grid_size]int) {
-	var xDiff, yDiff = diff(knot.xPos, prevKnot.xPos), diff(knot.yPos, prevKnot.yPos)
+	var xDiff, yDiff = common.Diff(knot.xPos, prevKnot.xPos), common.Diff(knot.yPos, prevKnot.yPos)
 	if xDiff == 2 && yDiff == 0 {
 		knot.xPos += (prevKnot.xPos - knot.xPos) / 2 
 	} else if yDiff == 2 && xDiff == 0 {

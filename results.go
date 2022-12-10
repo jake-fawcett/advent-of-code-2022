@@ -11,9 +11,11 @@ import (
 	"advent-of-code-2022/day7"
 	"advent-of-code-2022/day8"
 	"advent-of-code-2022/day9"
+	"advent-of-code-2022/day10"
 )
 
 func askUserDay() (string) {
+	fmt.Println("Warning: Day9 is currently inefficnet and slow.")
 	fmt.Print("Enter number of day to run (0 for all): ")
 	var input string
     _, err := fmt.Scanln(&input)
@@ -34,6 +36,7 @@ func main() {
 		"day7": day7.Calculate,
 		"day8": day8.Calculate,
 		"day9": day9.Calculate,
+		"day10": day10.Calculate,
 	}
 
 	chosenDay := askUserDay()

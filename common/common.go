@@ -7,10 +7,12 @@ import (
 	"os"
 )
 
-type ContentTypes struct{
-    strings string
-    const2 int
-}
+func Diff(a, b int) int {
+	if a < b {
+	   return b - a
+	}
+	return a - b
+ }
 
 func ReadTextFileOfString(file_name string) ([]string) {
 	file, err := os.Open(file_name)
