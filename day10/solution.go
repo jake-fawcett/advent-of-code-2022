@@ -59,10 +59,6 @@ func partTwo(fileLines []string) ([6]string) {
 			cycle += 1
 		}
 	}
-
-	for _, value := range crt {
-		fmt.Println(value)
-	}
 	return crt
 }
 

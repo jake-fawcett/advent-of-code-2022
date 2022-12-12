@@ -9,22 +9,11 @@ import (
 
 const file_name string = "day5/input.txt"
 
-type stack []string
-
-func (s stack) Push(v string) stack {
-    return append(s, v)
-}
-
-func (s stack) Pop() (stack, string) {
-    l := len(s)
-    return  s[:l-1], s[l-1]
-}
-
-func createStackList(fileLines []string) ([]stack) {
-	var stackList []stack
+func createStackList(fileLines []string) ([]common.StringStack) {
+	var stackList []common.StringStack
 
 	for crateStack:=0; crateStack<=8; crateStack++ {
-		var stack stack
+		var stack common.StringStack
 		for crate:=7; crate>=0; crate-- {
 			var supply = string(fileLines[crate][(crateStack*4)+1])
 			if supply != " " {
@@ -37,7 +26,7 @@ func createStackList(fileLines []string) ([]stack) {
 	return stackList
 }
 
-func getTopCrates(stackList []stack) (string) {
+func getTopCrates(stackList []common.StringStack) (string) {
 	var topCrates string
 	var poppedCrate string
 	for _, stack := range stackList {
@@ -80,7 +69,7 @@ func partTwo(fileLines []string) (string) {
 		var toStack, _ = strconv.Atoi(intStructions[2])
 		toStack--
 		var poppedCrate string
-		var tempStack stack
+		var tempStack common.StringStack
 		for i:=1; i<=numToMove; i++ {
 			stackList[fromStack], poppedCrate = stackList[fromStack].Pop()
 			tempStack = tempStack.Push(poppedCrate)

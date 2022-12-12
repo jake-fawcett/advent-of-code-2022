@@ -7,6 +7,28 @@ import (
 	"os"
 )
 
+type StringStack []string
+
+func (s StringStack) Push(v string) StringStack {
+    return append(s, v)
+}
+
+func (s StringStack) Pop() (StringStack, string) {
+    l := len(s)
+    return  s[:l-1], s[l-1]
+}
+
+type IntStack []int
+
+func (s IntStack) Push(v int) IntStack {
+    return append(s, v)
+}
+
+func (s IntStack) Pop() (IntStack, int) {
+    l := len(s)
+    return  s[:l-1], s[l-1]
+}
+
 func Diff(a, b int) int {
 	if a < b {
 	   return b - a

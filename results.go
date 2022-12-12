@@ -12,6 +12,8 @@ import (
 	"advent-of-code-2022/day8"
 	"advent-of-code-2022/day9"
 	"advent-of-code-2022/day10"
+	"advent-of-code-2022/day11"
+	"advent-of-code-2022/day12"
 )
 
 func askUserDay() (string) {
@@ -37,6 +39,8 @@ func main() {
 		"day8": day8.Calculate,
 		"day9": day9.Calculate,
 		"day10": day10.Calculate,
+		"day11": day11.Calculate,
+		"day12": day12.Calculate,
 	}
 
 	chosenDay := askUserDay()
@@ -45,7 +49,10 @@ func main() {
 		fmt.Printf("- - - %s - - -\n %s \n\n", day, m[day]())
 	} else {
 		for day, function := range m {
-			fmt.Printf("- - - %s - - -\n %s \n\n", day, function())
+			if day == "day12" { fmt.Println("Skipping Day12 as it is really inefficient") } else 
+			{
+				fmt.Printf("- - - %s - - -\n %s \n\n", day, function())
+			}
 		}
 	}
 }
