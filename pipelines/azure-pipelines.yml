@@ -39,8 +39,8 @@ stages:
 - stage: DeployInfra
   dependsOn: StateStorage
   jobs:     
-  - job: StateStorage
-    displayName: State Storage
+  - job: DeployInfra
+    displayName: Deploy Infra
     steps:
       - task: AzureCLI@2
         displayName: Validate
