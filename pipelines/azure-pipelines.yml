@@ -31,7 +31,7 @@ stages:
           scriptLocation: inlineScript
           inlineScript: |
             #!/bin/bash
-            az group create --name ${{ variables.resourceGroup }} --location eastus
+            az group create --name ${{ variables.resourceGroup }} --location uksouth
             az storage account create --resource-group ${{ variables.resourceGroup }} --name ${{ variables.storageAccountName }} --sku Standard_LRS --encryption-services blob
             az storage container create --name ${{ variables.containerName }} --account-name ${{ variables.storageAccountName }}
           workingDirectory: '.'
