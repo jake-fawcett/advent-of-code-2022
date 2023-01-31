@@ -10,3 +10,7 @@ variables:
 # State
   storageAccountName: tfstateaoc2022${{ variables.environment }}
   containerName: tfstate
+
+# App
+  webAppType: webAppLinux
+  runTimeStack: GO:1.18

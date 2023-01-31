@@ -65,3 +65,33 @@ stages:
             terraform plan -var "tenant_id=${{ variables.tenantId }}" "subscription_id=${{ variables.subscriptionId }}" "client_id=$(spClientId)" "client_secret=$(spClientSecret)"
             terraform apply -var "tenant_id=${{ variables.tenantId }}" "subscription_id=${{ variables.subscriptionId }}" "client_id=$(spClientId)" "client_secret=$(spClientSecret)"
           workingDirectory: '../infrastructure'
+
+- stage: DeployApp
+  dependsOn: DeployInfra
+  jobs:     
+  - job: DeployApp
+      displayName: Build App Artifact
+      steps:
+        - task: ArchiveFiles@2
+          displayName: Create webapp Artifact
+          inputs: 
+            rootFolderOrFile: '../app'
+            includeRootFolder: false
+            archiveType: zip
+            archiveFile: 'Application$(Build.BuildId).zip'
+            replaceExistingArchive: true
+    - deployment: Deploy
+      environment: ${{ variables.environment }}
+      pool: ${{ variables.buildAgents }}
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+            - task: AzureWebApp@1
+              displayName: Deploy Webapp
+              inputs:
+                azureSubscription: ${{ variables.serviceConnection }}
+                appType: ${{ variables.webAppType }}
+                appName: ${{ variables.webAppName }}
+                package: 'Application$(Build.BuildId).zip'
+                runtimeStack: ${{ variables.runTimeStack }}
