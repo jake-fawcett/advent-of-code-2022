@@ -7,7 +7,7 @@ terraform {
     }
   }
   backend "azurerm" {
-    resource_group_name  = "advent-of-code-2022-go-dev"
+    resource_group_name  = "aoc-2022-dev"
     storage_account_name = "tfstateaoc2022dev"
     container_name       = "tfstate"
     key                  = "terraform.tfstate"
