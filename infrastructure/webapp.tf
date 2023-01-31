@@ -11,7 +11,6 @@ variable "client_id" {
 variable "client_secret" {
 }
 
-
 # Configure the Azure provider
 terraform {
   required_providers {
@@ -19,6 +18,12 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "~> 3.34.0"
     }
+  }
+  backend "azurerm" {
+    resource_group_name  = "advent-of-code-2022-go-dev"
+    storage_account_name = "tfstateaoc2022dev"
+    container_name       = "tfstate"
+    key                  = "terraform.tfstate"
   }
 }
 provider "azurerm" {

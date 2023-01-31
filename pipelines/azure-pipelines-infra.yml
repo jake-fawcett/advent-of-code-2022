@@ -1,0 +1,67 @@
+trigger:
+  - develop
+
+parameters:
+  - name: environment
+    displayName: "Environment Selection"
+    type: string
+    default: dev
+    values:
+      - dev
+      - prod
+
+variables:
+  - group: aoc-2022-${{ parameters.environment }}
+  - template: vars-${{ parameters.environment }}.yml
+
+stages:
+- stage: StateStorage
+  displayName: State Storage
+  pool: ${{ variables.buildAgents }}
+  jobs:
+  - job: StateStorage
+    displayName: State Storage
+    steps:
+      - task: AzureCLI@2
+        displayName: Create State Storage
+        inputs:
+          azureSubscription: ${{ variables.serviceConnection }}
+          failOnStandardError: true
+          scriptType: bash
+          scriptLocation: inlineScript
+          inlineScript: |
+            #!/bin/bash
+            az group create --name ${{ variables.resourceGroup }} --location eastus
+            az storage account create --resource-group ${{ variables.resourceGroup }} --name ${{ variables.storageAccountName }} --sku Standard_LRS --encryption-services blob
+            az storage container create --name ${{ variables.containerName }} --account-name ${{ variables.storageAccountName }}
+          workingDirectory: '.'
+
+- stage: DeployInfra
+  dependsOn: StateStorage
+  jobs:     
+  - job: StateStorage
+    displayName: State Storage
+    steps:
+      - task: AzureCLI@2
+        displayName: Validate
+        inputs:
+          azureSubscription: ${{ variables.serviceConnection }}
+          failOnStandardError: true
+          scriptType: bash
+          scriptLocation: inlineScript
+          inlineScript: |
+            terraform init
+            terraform validate
+          workingDirectory: '../infrastructure'
+      - task: AzureCLI@2
+        displayName: Deploy
+        inputs:
+          azureSubscription: ${{ variables.serviceConnection }}
+          failOnStandardError: true
+          scriptType: bash
+          scriptLocation: inlineScript
+          inlineScript: |
+            terraform init
+            terraform plan -var "tenant_id=${{ variables.tenantId }}" "subscription_id=${{ variables.subscriptionId }}" "client_id=$(spClientId)" "client_secret=$(spClientSecret)"
+            terraform apply -var "tenant_id=${{ variables.tenantId }}" "subscription_id=${{ variables.subscriptionId }}" "client_id=$(spClientId)" "client_secret=$(spClientSecret)"
+          workingDirectory: '../infrastructure'
