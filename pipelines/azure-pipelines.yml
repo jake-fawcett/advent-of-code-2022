@@ -50,7 +50,9 @@ stages:
           scriptType: bash
           scriptLocation: inlineScript
           inlineScript: |
+            echo "terraform init"
             terraform init
+            echo "terraform validate"
             terraform validate
           workingDirectory: '../infrastructure'
       - task: AzureCLI@2
@@ -61,9 +63,14 @@ stages:
           scriptType: bash
           scriptLocation: inlineScript
           inlineScript: |
+            echo "terraform init"
             terraform init
-            terraform plan -var "tenant_id=${{ variables.tenantId }}" "subscription_id=${{ variables.subscriptionId }}" "client_id=$(spClientId)" "client_secret=$(spClientSecret)"
-            terraform apply -var "tenant_id=${{ variables.tenantId }}" "subscription_id=${{ variables.subscriptionId }}" "client_id=$(spClientId)" "client_secret=$(spClientSecret)"
+            echo "terraform plan"
+            terraform plan -var "tenant_id=${{ variables.tenantId }}" -var "subscription_id=${{ variables.subscriptionId }}" \
+             -var "client_id=$(spClientId)" -var "client_secret=$(spClientSecret)"
+            echo "terraform apply"
+            terraform apply -var "tenant_id=${{ variables.tenantId }}" -var "subscription_id=${{ variables.subscriptionId }}" \
+             -var "client_id=$(spClientId)" -var "client_secret=$(spClientSecret)"
           workingDirectory: '../infrastructure'
 
 - stage: DeployApp
