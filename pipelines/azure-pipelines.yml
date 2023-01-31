@@ -54,7 +54,7 @@ stages:
             terraform init
             echo "terraform validate"
             terraform validate
-          workingDirectory: '../infrastructure'
+          workingDirectory: 'infrastructure'
       - task: AzureCLI@2
         displayName: Deploy
         inputs:
@@ -71,7 +71,7 @@ stages:
             echo "terraform apply"
             terraform apply -var "tenant_id=${{ variables.tenantId }}" -var "subscription_id=${{ variables.subscriptionId }}" \
              -var "client_id=$(spClientId)" -var "client_secret=$(spClientSecret)"
-          workingDirectory: '../infrastructure'
+          workingDirectory: 'infrastructure'
 
 - stage: DeployApp
   dependsOn: DeployInfra
@@ -82,7 +82,7 @@ stages:
       - task: ArchiveFiles@2
         displayName: Create webapp Artifact
         inputs: 
-          rootFolderOrFile: '../app'
+          rootFolderOrFile: 'app'
           includeRootFolder: false
           archiveType: zip
           archiveFile: 'Application$(Build.BuildId).zip'
