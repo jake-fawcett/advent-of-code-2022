@@ -63,7 +63,7 @@ stages:
             echo "terraform plan"
             terraform plan
             echo "terraform apply"
-            terraform apply
+            terraform apply -auto-approve
           workingDirectory: 'infrastructure'
 
 - stage: DeployApp
