@@ -44,9 +44,3 @@ resource "azurerm_linux_web_app" "webapp" {
     minimum_tls_version = "1.2"
   }
 }
-
-resource "null_resource" "deployWebapp" {
-  provisioner "local-exec" {
-    command = "az webapp up --resource-group ${azurerm_resource_group.rg.name} --name ${azurerm_linux_web_app.webapp.name} --os-type linux --runtime GO:1.18"
-  }
-}
