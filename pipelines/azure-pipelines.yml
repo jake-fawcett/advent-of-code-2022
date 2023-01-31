@@ -63,7 +63,9 @@ stages:
             echo "terraform plan"
             terraform plan
             echo "terraform apply"
-            terraform apply -auto-approve
+            terraform apply -auto-approve -var "resource_group_name=${{ variables.resourceGroup }}" -var "location=${{ variables.location }}" -var "web_app_name=${{ variables.webAppName }}" \
+              -var "web_app_server_name=${{ variables.webAppServerName }}" -var "web_app_server_kind=${{ variables.webAppServerKind }}" -var "web_app_server_sku=${{ variables.webAppServerSku }}" \
+              -var "storage_account_name=${{ variables.storageAccountName }}" -var "storage_account_container_name=${{ variables.containerName }}"
           workingDirectory: 'infrastructure'
 
 - stage: DeployApp
