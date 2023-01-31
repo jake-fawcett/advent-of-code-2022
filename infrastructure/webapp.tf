@@ -1,16 +1,3 @@
-
-variable "tenant_id" {
-}
-
-variable "subscription_id" {
-}
-
-variable "client_id" {
-}
-
-variable "client_secret" {
-}
-
 # Configure the Azure provider
 terraform {
   required_providers {
@@ -28,11 +15,6 @@ terraform {
 }
 provider "azurerm" {
   features {}
-
-  subscription_id = var.subscription_id
-  tenant_id       = var.tenant_id
-  client_id       = var.client_id
-  client_secret   = var.client_secret
 }
 
 # Create the resource group
