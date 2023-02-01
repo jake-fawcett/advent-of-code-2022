@@ -18,4 +18,4 @@ variables:
 
 # App
   webAppType: webAppLinux
-  runTimeStack: GO:1.18
+  runTimeStack: "GO:1.18"
