@@ -49,11 +49,8 @@ provider "azurerm" {
   features {}
 }
 
-# Create the resource group
-resource "azurerm_resource_group" "rg" {
-  name     = var.resource_group_name
-  location = var.location
-}
+# Define the resource group (for import)
+resource "azurerm_resource_group" "rg" {}
 
 # Create the Linux App Service Plan
 resource "azurerm_service_plan" "appserviceplan" {

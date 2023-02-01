@@ -59,7 +59,7 @@ stages:
             echo "terraform init"
             terraform init
             echo "terraform import resource group"
-            terraform import azurerm_resource_group.rg /subscriptions/${{ variables.subscriptionId }}/resourceGroups/${{ variables.resourceGroup }} -var location="${{ variables.location }}"
+            terraform import azurerm_resource_group.rg /subscriptions/${{ variables.subscriptionId }}/resourceGroups/${{ variables.resourceGroup }}
             echo "terraform validate"
             terraform validate
             echo "terraform plan"
