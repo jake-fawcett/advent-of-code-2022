@@ -73,7 +73,7 @@ stages:
 - stage: DeployApp
   dependsOn: DeployInfra
   jobs:     
-  - job: DeployApp
+  - job: BuildApp
     displayName: Build App Artifact
     steps:
       - task: ArchiveFiles@2
@@ -84,7 +84,8 @@ stages:
           archiveType: zip
           archiveFile: 'Application$(Build.BuildId).zip'
           replaceExistingArchive: true
-  - deployment: Deploy
+  - deployment: DeployApp
+    dependsOn: BuildApp
     environment: ${{ variables.environment }}
     pool: ${{ variables.buildAgents }}
     strategy:
