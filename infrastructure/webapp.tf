@@ -39,9 +39,6 @@ terraform {
     }
   }
   backend "azurerm" {
-    resource_group_name  = "aoc-2022-dev"
-    storage_account_name = "tfstateaoc2022dev"
-    container_name       = "tfstate"
     key                  = "terraform.tfstate"
   }
 }
@@ -49,8 +46,10 @@ provider "azurerm" {
   features {}
 }
 
-# Define the resource group (for import)
-resource "azurerm_resource_group" "rg" {}
+# Get Resource Group data
+data "azurerm_resource_group" "rg" {
+  name                = var.resource_group_name
+}
 
 # Create the Linux App Service Plan
 resource "azurerm_service_plan" "appserviceplan" {
