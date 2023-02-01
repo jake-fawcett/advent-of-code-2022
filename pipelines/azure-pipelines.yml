@@ -59,7 +59,10 @@ stages:
             echo "terraform init"
             terraform init
             echo "terraform import resource group"
-            terraform import azurerm_resource_group.rg /subscriptions/${{ variables.subscriptionId }}/resourceGroups/${{ variables.resourceGroup }}
+            terraform import -var resource_group_name="${{ variables.resourceGroup }}" -var location="${{ variables.location }}" -var web_app_name="${{ variables.webAppName }}" \
+              -var web_app_server_name="${{ variables.webAppServerName }}" -var web_app_server_kind="${{ variables.webAppServerKind }}" -var web_app_server_sku="${{ variables.webAppServerSku }}" \
+              -var storage_account_name="${{ variables.storageAccountName }}" -var storage_account_container_name="${{ variables.containerName }}" \
+              azurerm_resource_group.rg /subscriptions/${{ variables.subscriptionId }}/resourceGroups/${{ variables.resourceGroup }}
             echo "terraform validate"
             terraform validate
             echo "terraform plan"
