@@ -100,5 +100,5 @@ stages:
               azureSubscription: ${{ variables.serviceConnection }}
               appType: ${{ variables.webAppType }}
               appName: ${{ variables.webAppName }}
-              package: 'Application$(Build.BuildId).zip'
+              package: '*.zip'
               runtimeStack: ${{ variables.runTimeStack }}
