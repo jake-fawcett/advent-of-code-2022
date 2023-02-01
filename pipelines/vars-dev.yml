@@ -8,7 +8,7 @@ variables:
   serviceConnection: aoc-2022-sc-${{ variables.environment }}
   resourceGroup: aoc-2022-${{ variables.environment }}
   webAppServerName: aoc-2022-webapp-server-${{ variables.environment }}
-  webAppServerKind: linux
+  webAppServerKind: Linux
   webAppServerSku: B1
   webAppName: aoc-2022-webapp-${{ variables.environment }}
 
