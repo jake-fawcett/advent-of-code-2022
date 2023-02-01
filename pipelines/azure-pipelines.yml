@@ -73,28 +73,21 @@ stages:
 - stage: DeployApp
   dependsOn: DeployInfra
   jobs:     
-  - job: BuildApp
-    displayName: Build App Artifact
-    steps:
-      - task: ArchiveFiles@2
-        displayName: Create webapp Artifact
-        inputs: 
-          rootFolderOrFile: 'app'
-          includeRootFolder: false
-          archiveType: zip
-          archiveFile: 'Application$(Build.BuildId).zip'
-          replaceExistingArchive: true
-      - bash: ls .
-      - bash: ls app
   - deployment: DeployApp
-    dependsOn: BuildApp
     environment: ${{ variables.environment }}
     pool: ${{ variables.buildAgents }}
     strategy:
       runOnce:
         deploy:
           steps:
-          - bash: ls .
+          - task: ArchiveFiles@2
+            displayName: Create webapp Artifact
+            inputs: 
+              rootFolderOrFile: 'app'
+              includeRootFolder: false
+              archiveType: zip
+              archiveFile: 'Application$(Build.BuildId).zip'
+              replaceExistingArchive: true
           - task: AzureWebApp@1
             displayName: Deploy Webapp
             inputs:
