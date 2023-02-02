@@ -40,7 +40,7 @@ func main() {
         http.HandleFunc(path, DayServer(function))
 	}
 
-    http.ListenAndServe(":8080", nil)
+    http.ListenAndServe(":80", nil)
 }
 
 func DayServer(f func()(string)) http.HandlerFunc {
