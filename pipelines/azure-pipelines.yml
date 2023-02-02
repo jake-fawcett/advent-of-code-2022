@@ -88,6 +88,10 @@ stages:
               archiveType: zip
               archiveFile: 'Application$(Build.BuildId).zip'
               replaceExistingArchive: true
+  - bash: ls
+  - bash: tar -xvf Application$(Build.BuildId).zip
+  - bash: ls
+  - bash: ls Application$(Build.BuildId)
   - deployment: Deploy
     displayName: Deploy App
     dependsOn: BuildApp
