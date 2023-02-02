@@ -18,6 +18,7 @@ import (
 )
 
 func main() {
+    http.HandleFunc("/", HelloServer)
     http.HandleFunc("/hello", HelloServer)
 
     m := map[string]func()(string) {
@@ -40,7 +41,7 @@ func main() {
         http.HandleFunc(path, DayServer(function))
 	}
 
-    http.ListenAndServe(":80", nil)
+    http.ListenAndServe(":8080", nil)
 }
 
 func DayServer(f func()(string)) http.HandlerFunc {
