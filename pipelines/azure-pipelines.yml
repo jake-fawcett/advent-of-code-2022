@@ -83,7 +83,7 @@ stages:
           - task: ArchiveFiles@2
             displayName: Create webapp Artifact
             inputs: 
-              rootFolderOrFile: 'app'
+              rootFolderOrFile: 'app/'
               includeRootFolder: false
               archiveType: zip
               archiveFile: 'Application$(Build.BuildId).zip'
