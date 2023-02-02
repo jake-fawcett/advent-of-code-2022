@@ -16,7 +16,6 @@ variables:
 
 stages:
 - stage: StateStorage
-  displayName: State Storage
   pool: ${{ variables.buildAgents }}
   jobs:
   - job: StateStorage
@@ -37,6 +36,7 @@ stages:
           workingDirectory: '.'
 
 - stage: DeployInfra
+  pool: ${{ variables.buildAgents }}
   dependsOn: StateStorage
   jobs:     
   - job: DeployInfra
@@ -70,28 +70,32 @@ stages:
               -var storage_account_name="${{ variables.storageAccountName }}" -var storage_account_container_name="${{ variables.containerName }}"
           workingDirectory: 'infrastructure'
 
-- stage: DeployApp
+- stage: BuildAndDeployApp
+  pool: ${{ variables.buildAgents }}
   dependsOn: DeployInfra
   jobs:     
-  - deployment: BuildApp
-    environment: ${{ variables.environment }}
-    pool: ${{ variables.buildAgents }}
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: ArchiveFiles@2
-            displayName: Create webapp Artifact
-            inputs: 
-              rootFolderOrFile: 'app/'
-              includeRootFolder: false
-              archiveType: zip
-              archiveFile: 'Application$(Build.BuildId).zip'
-              replaceExistingArchive: true
-  - bash: ls
-  - bash: tar -xvf Application$(Build.BuildId).zip
-  - bash: ls
-  - bash: ls Application$(Build.BuildId)
+  - job: BuildApp
+    displayName: Build App
+    steps:
+      - task: ArchiveFiles@2
+        displayName: Create webapp Artifact
+        inputs: 
+          rootFolderOrFile: 'app/'
+          includeRootFolder: false
+          archiveType: zip
+          archiveFile: 'Application$(Build.BuildId).zip'
+          replaceExistingArchive: true
+      - bash: ls
+      - bash: tar -xvf Application$(Build.BuildId).zip
+      - bash: ls
+      - bash: ls Application$(Build.BuildId)
+  - job: CheckArtifact
+    displayName: Check Artifact
+    steps:
+      - bash: ls
+      - bash: tar -xvf Application$(Build.BuildId).zip
+      - bash: ls
+      - bash: ls Application$(Build.BuildId)
   - deployment: Deploy
     displayName: Deploy App
     dependsOn: BuildApp
