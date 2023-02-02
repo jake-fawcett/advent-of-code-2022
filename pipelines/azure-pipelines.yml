@@ -73,7 +73,7 @@ stages:
 - stage: DeployApp
   dependsOn: DeployInfra
   jobs:     
-  - deployment: DeployApp
+  - deployment: BuildApp
     environment: ${{ variables.environment }}
     pool: ${{ variables.buildAgents }}
     strategy:
@@ -88,6 +88,15 @@ stages:
               archiveType: zip
               archiveFile: 'Application$(Build.BuildId).zip'
               replaceExistingArchive: true
+  - deployment: Deploy
+    displayName: Deploy App
+    dependsOn: BuildApp
+    environment: ${{ variables.environment }}
+    pool: ${{ variables.buildAgents }}
+    strategy:
+      runOnce:
+        deploy:
+          steps:
           - task: AzureWebApp@1
             displayName: Deploy Webapp
             inputs:
@@ -96,3 +105,4 @@ stages:
               appName: ${{ variables.webAppName }}
               package: 'Application$(Build.BuildId).zip'
               runtimeStack: ${{ variables.runTimeStack }}
+              deploymentMethod: zipDeploy
