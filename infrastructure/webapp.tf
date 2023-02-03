@@ -1,14 +1,33 @@
-
-variable "tenant_id" {
+variable "resource_group_name" {
+  type = string
 }
 
-variable "subscription_id" {
+variable "web_app_name" {
+  type = string
 }
 
-variable "client_id" {
+variable "web_app_server_name" {
+  type = string
 }
 
-variable "client_secret" {
+variable "web_app_server_kind" {
+  type = string
+}
+
+variable "web_app_server_sku" {
+  type = string
+}
+
+variable "storage_account_name" {
+  type = string
+}
+
+variable "storage_account_container_name" {
+  type = string
+}
+
+variable "location" {
+  type = string
 }
 
 # Configure the Azure provider
@@ -16,55 +35,47 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 3.34.0"
+      version = "~> 3.42.0"
     }
   }
   backend "azurerm" {
-    resource_group_name  = "advent-of-code-2022-go-dev"
-    storage_account_name = "tfstateaoc2022dev"
-    container_name       = "tfstate"
     key                  = "terraform.tfstate"
   }
 }
 provider "azurerm" {
   features {}
-
-  subscription_id = var.subscription_id
-  tenant_id       = var.tenant_id
-  client_id       = var.client_id
-  client_secret   = var.client_secret
 }
 
-# Create the resource group
-resource "azurerm_resource_group" "rg" {
-  name     = "advent-of-code-2022-go"
-  location = "uksouth"
+# Get Resource Group data
+data "azurerm_resource_group" "rg" {
+  name                = var.resource_group_name
 }
 
 # Create the Linux App Service Plan
 resource "azurerm_service_plan" "appserviceplan" {
-  name                = "aoc-golang-webapp-asp"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
-  os_type             = "Linux"
-  sku_name            = "B1"
+  name                = var.web_app_server_name
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  os_type             = var.web_app_server_kind
+  sku_name            = var.web_app_server_sku
 }
 
 # Create the web app, pass in the App Service Plan ID
 resource "azurerm_linux_web_app" "webapp" {
-  name                  = "aoc-golang-webapp"
-  location              = azurerm_resource_group.rg.location
-  resource_group_name   = azurerm_resource_group.rg.name
+  name                  = var.web_app_name
+  location              = var.location
+  resource_group_name   = var.resource_group_name
   service_plan_id       = azurerm_service_plan.appserviceplan.id
   https_only            = true
-  
   site_config { 
     minimum_tls_version = "1.2"
+    http2_enabled = true
+    always_on = false
+    application_stack {
+      go_version = "1.18"
+    }
   }
-}
-
-resource "null_resource" "deployWebapp" {
-  provisioner "local-exec" {
-    command = "az webapp up --resource-group ${azurerm_resource_group.rg.name} --name ${azurerm_linux_web_app.webapp.name} --os-type linux --runtime GO:1.18"
+  app_settings = {
+      "SCM_DO_BUILD_DURING_DEPLOYMENT" = "True"
   }
 }

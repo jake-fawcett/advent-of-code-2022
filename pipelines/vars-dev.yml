@@ -4,8 +4,13 @@ variables:
   environment: dev
   tenantId: 494fdacd-c12c-4c24-a407-e02b88c3bb30
   subscriptionId: 2293b5f9-5144-48c3-9e63-605f45ecbc1e
+  location: uksouth
   serviceConnection: aoc-2022-sc-${{ variables.environment }}
-  resourceGroup: advent-of-code-2022-go-${{ variables.environment }}
+  resourceGroup: aoc-2022-${{ variables.environment }}
+  webAppServerName: aoc-2022-webapp-server-${{ variables.environment }}
+  webAppServerKind: Linux
+  webAppServerSku: B1
+  webAppName: aoc-2022-webapp-${{ variables.environment }}
 
 # State
   storageAccountName: tfstateaoc2022${{ variables.environment }}
@@ -13,4 +18,4 @@ variables:
 
 # App
   webAppType: webAppLinux
-  runTimeStack: GO:1.18
+  runTimeStack: "GO|1.18"
