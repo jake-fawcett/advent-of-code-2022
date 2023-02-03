@@ -70,11 +70,7 @@ resource "azurerm_linux_web_app" "webapp" {
   site_config { 
     minimum_tls_version = "1.2"
     http2_enabled = true
-    https_only = true
     always_on = false
-    application_stack {
-      go_version = 1.18
-    }
   }
   app_settings = {
       "SCM_DO_BUILD_DURING_DEPLOYMENT" = "True"
