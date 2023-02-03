@@ -19,7 +19,6 @@ import (
 
 func main() {
     http.HandleFunc("/", HelloServer)
-    http.HandleFunc("/hello", HelloServer)
 
     m := map[string]func()(string) {
 		"day1": day1.Calculate,
@@ -45,12 +44,12 @@ func main() {
 	// This can be random, so needs to be loaded at startup
 	port := os.Getenv("HTTP_PLATFORM_PORT")
 
-	// default back to 8080 for local dev
+	// Default back to 8080 for local dev
 	if port == "" {
 		port = "8080"
 	}
 
-    http.ListenAndServe(":8080", nil)
+    http.ListenAndServe(port, nil)
 }
 
 func DayServer(f func()(string)) http.HandlerFunc {
@@ -60,5 +59,5 @@ func DayServer(f func()(string)) http.HandlerFunc {
 }
 
 func HelloServer(w http.ResponseWriter, r *http.Request) {
-    fmt.Fprintf(w, "Hello!")
+    fmt.Fprintf(w, "Hello World!")
 }
