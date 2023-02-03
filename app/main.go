@@ -18,7 +18,7 @@ import (
 )
 
 func main() {
-	http.HandleFunc("/", HelloServer)
+	http.HandleFunc("/hello", HelloServer)
 
 	m := map[string]func() string{
 		"day1":  day1.Calculate,
