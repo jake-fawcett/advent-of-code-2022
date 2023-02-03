@@ -1,6 +1,3 @@
-trigger:
-  - develop
-
 parameters:
   - name: environment
     displayName: "Environment Selection"
