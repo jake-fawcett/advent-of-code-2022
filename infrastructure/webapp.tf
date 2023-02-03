@@ -67,7 +67,6 @@ resource "azurerm_linux_web_app" "webapp" {
   resource_group_name   = var.resource_group_name
   service_plan_id       = azurerm_service_plan.appserviceplan.id
   https_only            = true
-  
   site_config { 
     minimum_tls_version = "1.2"
     http2_enabled = true
@@ -76,8 +75,8 @@ resource "azurerm_linux_web_app" "webapp" {
     application_stack {
       go_version = 1.18
     }
-    app_settings = {
+  }
+  app_settings = {
       "SCM_DO_BUILD_DURING_DEPLOYMENT" = "True"
-    }
   }
 }
