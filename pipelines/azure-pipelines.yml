@@ -77,6 +77,7 @@ stages:
   - job: BuildApp
     displayName: Build App
     steps:
+      - bash: rm app/results.go
       - task: ArchiveFiles@2
         displayName: Create webapp Artifact
         inputs: 
