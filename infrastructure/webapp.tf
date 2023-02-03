@@ -35,7 +35,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 3.34.0"
+      version = "~> 3.42.0"
     }
   }
   backend "azurerm" {
@@ -72,7 +72,7 @@ resource "azurerm_linux_web_app" "webapp" {
     http2_enabled = true
     always_on = false
     application_stack {
-      go_version = 1.18
+      go_version = "1.18"
     }
   }
   app_settings = {
