@@ -82,7 +82,6 @@ stages:
         displayName: 'go build'
         inputs:
           command: build
-          arguments: '-o "$(System.TeamProject).exe"'
           workingDirectory: 'app/'
       - task: ArchiveFiles@2
         displayName: Create webapp Artifact
